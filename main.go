@@ -18,6 +18,11 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	e.GET("/ping", func(c echo.Context) error {
+		// Return a response on ping.
+		return c.JSON(http.StatusOK, "pong")
+	})
+
 	e.GET("/api/v1/precipitation", func(c echo.Context) error {
 
 		// API endpoint.
