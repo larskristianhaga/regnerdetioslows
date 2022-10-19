@@ -32,5 +32,5 @@ jobs:
         uses: 'google-github-actions/deploy-cloudrun@v0'
         with:
           service: 'regnerdetioslows'
-          image: 'eu.gcr.io/regnerdetioslows'
+          image: 'eu.gcr.io/regnerdetioslo/regnerdetioslows'
           region: 'europe-west1'
