@@ -29,7 +29,9 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Upload the Docker image
-        run: docker push eu.gcr.io/regnerdetioslo/regnerdetioslows
+        run: |
+          gcloud auth activate-service-account regnerdetioslo@appspot.gserviceaccount.com --key-file=/home/runner/work/regnerdetioslows/regnerdetioslows/gha-creds-8e797ad082d61a3a.json
+          docker push eu.gcr.io/regnerdetioslo/regnerdetioslows
 
       - name: Deploy to Cloud Run
         id: 'deploy'
