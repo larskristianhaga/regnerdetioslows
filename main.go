@@ -40,11 +40,14 @@ func main() {
 		}
 
 		var yr Yr
+		// JSONIFY the string.
 		_ = json.Unmarshal(responseData, &yr)
 
+		// Extract the values I want.
 		var doesItRain = yr.Points[1].Precipitation.Intensity > 0
 		var lastUpdatedAt = yr.Points[1].Time
 
+		// Return the object.
 		return c.JSON(http.StatusOK, struct {
 			DoesItRain   bool
 			DataFromTime string
