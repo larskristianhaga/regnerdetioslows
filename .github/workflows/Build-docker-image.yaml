@@ -1,6 +1,7 @@
 name: Docker Image CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'main'
@@ -19,15 +20,16 @@ jobs:
         run: docker build -t regnerdetioslows .
 
       - name: Tag the Docker image correctly for upload
-        run: |
-          docker tag regnerdetioslows eu.gcr.io/regnerdetioslo/regnerdetioslows
-          docker push eu.gcr.io/regnerdetioslo/regnerdetioslows
+        run: docker tag regnerdetioslows eu.gcr.io/regnerdetioslo/regnerdetioslows
 
       - name: Authenticating towards GCP
         id: auth
         uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Upload the Docker image
+        run: docker push eu.gcr.io/regnerdetioslo/regnerdetioslows
 
       - name: Deploy to Cloud Run
         id: 'deploy'
