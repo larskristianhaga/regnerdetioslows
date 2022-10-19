@@ -20,7 +20,10 @@ func main() {
 	})
 
 	e.GET("/api/v1/precipitation", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, struct{ DoesItRain bool; LastUpdated string }{DoesItRain: false, LastUpdated: "A minute ago"})
+		return c.JSON(http.StatusOK, struct {
+			DoesItRain  bool
+			LastUpdated string
+		}{DoesItRain: false, LastUpdated: "A minute ago"})
 	})
 
 	httpPort := os.Getenv("HTTP_PORT")
