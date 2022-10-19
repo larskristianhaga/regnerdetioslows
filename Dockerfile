@@ -1,21 +1,25 @@
-FROM golang:1.16-alpine
+## Build
+FROM golang:1.16-buster AS build
 
-# Set the destination for COPY
 WORKDIR /app
 
-# Download Go modules
-COPY go.mod .
-COPY go.sum .
+COPY go.mod ./
+COPY go.sum ./
 RUN go mod download
 
 COPY *.go ./
 
-# Build
 RUN go build -o /regnerdetioslows
 
-# To actually open the port, runtime parameters
-# must be supplied to the docker command.
+## Deploy
+FROM gcr.io/distroless/base-debian10
+
+WORKDIR /
+
+COPY --from=build /regnerdetioslows /regnerdetioslows
+
 EXPOSE 8080
 
-# Run
-CMD [ "/regnerdetioslows" ]
+USER nonroot:nonroot
+
+ENTRYPOINT ["/regnerdetioslows"]
