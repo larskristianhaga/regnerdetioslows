@@ -18,14 +18,19 @@ jobs:
       - name: Build the Docker image
         run: docker build -t regnerdetioslows .
 
+      - name: Tag the Docker image correctly for upload
+        run: docker tag regnerdetioslows eu.gcr.io/regnerdetioslo/regnerdetioslows
+
       - name: Authenticating towards GCP
         id: auth
         uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - id: 'deploy'
+      - name: Deploy to Cloud Run
+        id: 'deploy'
         uses: 'google-github-actions/deploy-cloudrun@v0'
         with:
           service: 'regnerdetioslows'
-          image: 'gcr.io/regnerdetioslows'
+          image: 'eu.gcr.io/regnerdetioslows'
+          region: 'europe-west1'
