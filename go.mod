@@ -1,4 +1,4 @@
-module github.com/olliefr/docker-gs-ping
+module github.com/larskristianhaga/regnerdetioslows
 
 go 1.16
 
