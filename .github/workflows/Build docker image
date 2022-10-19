@@ -6,8 +6,16 @@ on:
 
 jobs:
   build:
+    permissions:
+    contents: 'read'
+    id-token: 'write'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+
     - name: Build the Docker image
-      run: docker build -t regnerdetioslows -f Dockerfile.multistage .
+      run: docker build -t regnerdetioslows .
+
+    - name: Deploy to Cloud Run
+      uses: google-github-actions/deploy-cloudrun@v0.10.1
