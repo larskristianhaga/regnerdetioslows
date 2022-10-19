@@ -19,7 +19,9 @@ jobs:
         run: docker build -t regnerdetioslows .
 
       - name: Tag the Docker image correctly for upload
-        run: docker tag regnerdetioslows eu.gcr.io/regnerdetioslo/regnerdetioslows
+        run: |
+          docker tag regnerdetioslows eu.gcr.io/regnerdetioslo/regnerdetioslows
+          docker push eu.gcr.io/regnerdetioslo/regnerdetioslows
 
       - name: Authenticating towards GCP
         id: auth
